@@ -1,0 +1,39 @@
+.add-btn {
+  &__wrapper {
+    padding-left: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+    border-radius: 5px;
+    background-color: transparent;
+    color: rgba(207, 207, 207, 0.6);
+    text-decoration: none;
+
+    &:hover {
+      background-color: #646d80;
+    }
+
+    &:active {
+      background-color: #6e788e;
+    }
+  }
+  &__icon{
+    margin-right: 5px;
+
+    svg {
+      width: 20px;
+      height: 20px;
+      fill: rgba(207, 207, 207, 0.6);
+
+      path {
+        width: 20px;
+        height: 20px;
+      }
+    }
+  }
+  &__title {
+    font-size: calc(6px + 1.4vmin);
+    line-height: 100%;
+  }
+}

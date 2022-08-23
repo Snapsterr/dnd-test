@@ -1,4 +1,5 @@
 import React, { useState, useRef } from "react"
+import AddCardForm from "../AddCardForm/AddCardForm"
 
 import "./DragNDrop.scss"
 
@@ -57,38 +58,42 @@ const DragNDrop = ({ data }) => {
 
   return (
     <div className="drag-n-drop">
-      {list.map((grp, grpI) => (
-        <div
-          onDragEnter={
-            isDragging && !grp.items.length
-              ? (e) => handleDragEnter(e, { grpI, itemI: 0 })
-              : null
-          }
-          key={grp.title}
-          className="dnd-group"
-        >
-          <div className="group-title">{grp.title}</div>
-          {grp.items.map((item, itemI) => (
-            <div
-              draggable
-              onDragStart={(e) => {
-                handleDragStart(e, { grpI, itemI })
-              }}
-              onDragEnter={
-                isDragging
-                  ? (e) => {
-                      handleDragEnter(e, { grpI, itemI })
-                    }
-                  : null
-              }
-              key={item}
-              className={isDragging ? getStyles({ grpI, itemI }) : "dnd-item"}
-            >
-              {item}
-            </div>
-          ))}
-        </div>
-      ))}
+      {list.map((grp, grpI) => {
+        console.log(grp, grp.isAddFieldOpen)
+        return (
+          <label
+            onDragEnter={
+              isDragging && !grp.items.length
+                ? (e) => handleDragEnter(e, { grpI, itemI: 0 })
+                : null
+            }
+            key={grp.title}
+            className="dnd-group"
+          >
+            <div className="group-title">{grp.title}</div>
+            {grp.items.map((item, itemI) => (
+              <div
+                draggable
+                onDragStart={(e) => {
+                  handleDragStart(e, { grpI, itemI })
+                }}
+                onDragEnter={
+                  isDragging
+                    ? (e) => {
+                        handleDragEnter(e, { grpI, itemI })
+                      }
+                    : null
+                }
+                key={item}
+                className={isDragging ? getStyles({ grpI, itemI }) : "dnd-item"}
+              >
+                {item}
+              </div>
+            ))}
+            <AddCardForm list={list} grpI={grpI} />
+          </label>
+        )
+      })}
     </div>
   )
 }

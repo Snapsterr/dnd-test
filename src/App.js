@@ -1,5 +1,6 @@
-import "./App.css"
-import DragNDrop from "./components/DragNDrop"
+import DragNDrop from "./components/DragNDrop/DragNDrop"
+
+import "./App.scss"
 
 const data = [
   { title: "group 1", items: ["1", "2", "3"] },

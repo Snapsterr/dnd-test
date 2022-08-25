@@ -17,6 +17,20 @@
     &:active {
       background-color: #6e788e;
     }
+
+    &--group {
+      background-color: rgba(86, 126, 217, 0.4);
+
+      &:hover {
+        background-color: rgba(58, 107, 221, 0.4);
+      }
+  
+      &:active {
+        background-color: rgba(42, 89, 199, 0.4);
+      }
+    }
+
+    
   }
   &__icon{
     margin-right: 5px;
@@ -35,5 +49,7 @@
   &__title {
     font-size: calc(6px + 1.4vmin);
     line-height: 100%;
+
+    
   }
 }

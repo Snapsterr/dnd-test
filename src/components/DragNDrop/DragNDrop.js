@@ -71,29 +71,35 @@ const DragNDrop = ({ data }) => {
             className="dnd-group"
           >
             <div className="group-title">{grp.title}</div>
-            {grp.items.map((item, itemI) => (
-              <div
-                draggable
-                onDragStart={(e) => {
-                  handleDragStart(e, { grpI, itemI })
-                }}
-                onDragEnter={
-                  isDragging
-                    ? (e) => {
-                        handleDragEnter(e, { grpI, itemI })
-                      }
-                    : null
-                }
-                key={item}
-                className={isDragging ? getStyles({ grpI, itemI }) : "dnd-item"}
-              >
-                {item}
-              </div>
-            ))}
-            <AddCardForm list={list} grpI={grpI} />
+            <div className="dnd-tasks-section">
+              {grp.items.map((item, itemI) => (
+                <div
+                  draggable
+                  onDragStart={(e) => {
+                    handleDragStart(e, { grpI, itemI })
+                  }}
+                  onDragEnter={
+                    isDragging
+                      ? (e) => {
+                          handleDragEnter(e, { grpI, itemI })
+                        }
+                      : null
+                  }
+                  key={item}
+                  className={
+                    isDragging ? getStyles({ grpI, itemI }) : "dnd-item"
+                  }
+                >
+                  {item}
+                </div>
+              ))}
+            </div>
+
+            <AddCardForm setList={setList} list={list} grpI={grpI} />
           </label>
         )
       })}
+      <AddCardForm setList={setList} list={list} grpI={list.length} />
     </div>
   )
 }

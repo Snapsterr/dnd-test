@@ -2,9 +2,19 @@ import React, { useState } from "react"
 
 import "./AddButton.scss"
 
-const AddCard = ({ openForm }) => {
+const AddCard = ({ openForm, list, grpI }) => {
+  const buttonText = list.length === grpI ? "Add group" : "Add task"
+
   return (
-    <a href="#" onClick={openForm} className="add-btn__wrapper">
+    <a
+      href="#"
+      onClick={openForm}
+      className={
+        list.length === grpI
+          ? "add-btn__wrapper add-btn__wrapper--group"
+          : "add-btn__wrapper"
+      }
+    >
       <span className="add-btn__icon">
         <svg
           viewBox="0 0 36 36"
@@ -16,7 +26,7 @@ const AddCard = ({ openForm }) => {
           <rect x="0" y="0" width="36" height="36" fillOpacity="0" />
         </svg>
       </span>
-      <span className="add-btn__title">Add task</span>
+      <span className="add-btn__title">{buttonText}</span>
     </a>
   )
 }

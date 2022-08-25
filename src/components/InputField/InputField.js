@@ -2,13 +2,27 @@ import React, { useEffect, useRef, useState } from "react"
 
 import "./InputField.scss"
 
-const InputField = ({ closeForm, list, grpI }) => {
-  console.log("list", list[grpI].items)
+const InputField = ({ closeForm, list, setList, grpI }) => {
+  console.log("grp", grpI)
   const [currentValue, setCurrentValue] = useState("")
   const textareaRef = useRef(null)
 
+  const groupBGStyle = list.length === grpI ? "task task--group" : "task"
+  const placeholderValue =
+    list.length === grpI ? "Add group name..." : "Add some task here..."
+  const controlsStyle =
+    list.length === grpI
+      ? "task__controls task__controls--group"
+      : "task__controls"
+
+  console.log(controlsStyle)
+
   useEffect(() => {
-    textareaRef.current.style.height = "40px"
+    textareaRef.current.style.height = "44px"
+
+    if (grpI === list.length) {
+      textareaRef.current.style.height = "24px"
+    }
     const scrollHeight = textareaRef.current.scrollHeight
     textareaRef.current.style.height = scrollHeight + "px"
   }, [currentValue])
@@ -18,24 +32,45 @@ const InputField = ({ closeForm, list, grpI }) => {
     setCurrentValue(e.target.value)
   }
 
+  const addList = () => {
+    setList((oldList) => {
+      const newList = JSON.parse(JSON.stringify(oldList))
+      newList.push({ title: currentValue, items: [] })
+      setCurrentValue("")
+      return newList
+    })
+  }
+
+  const addTask = () => {
+    setList((oldList) => {
+      const newList = JSON.parse(JSON.stringify(oldList))
+      newList[grpI].items.push(currentValue)
+      setCurrentValue("")
+      return newList
+    })
+  }
+
   const onSubmit = (e) => {
     console.log("submitted")
     e.preventDefault()
-    const currentItem = list[grpI].items
-    currentItem.push(currentValue)
-    setCurrentValue("")
+    if (!currentValue.length) return
+    if (grpI === list.length) {
+      return addList()
+    }
+    addTask()
   }
   return (
-    <div className="task">
+    <div className={groupBGStyle}>
       <textarea
         type="text"
         ref={textareaRef}
         value={currentValue}
         onChange={inputTextField}
         className="task__textarea"
-        placeholder="Add some task here..."
+        placeholder={placeholderValue}
+        autoFocus
       ></textarea>
-      <div className="task__controls">
+      <div className={controlsStyle}>
         <input
           type="submit"
           onClick={onSubmit}

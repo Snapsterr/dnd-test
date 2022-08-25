@@ -4,7 +4,7 @@ import InputField from "../InputField/InputField"
 
 import "./AddCardForm.scss"
 
-const AddCardForm = ({ list, grpI }) => {
+const AddCardForm = ({ setList, list, grpI }) => {
   const [isOpen, setIsOpen] = useState(false)
 
   const openForm = (e) => {
@@ -13,15 +13,21 @@ const AddCardForm = ({ list, grpI }) => {
   }
 
   const closeForm = (e) => {
+    e.stopPropagation()
     setIsOpen(false)
   }
 
   return (
-    <div className="">
+    <div className="card-form">
       {isOpen ? (
-        <InputField list={list} grpI={grpI} closeForm={closeForm} />
+        <InputField
+          setList={setList}
+          list={list}
+          grpI={grpI}
+          closeForm={closeForm}
+        />
       ) : (
-        <AddButton openForm={openForm} />
+        <AddButton openForm={openForm} list={list} grpI={grpI} />
       )}
     </div>
   )

@@ -1,10 +1,12 @@
 import React, { useEffect, useRef, useState } from "react"
+import Controls from "../Controls/Controls"
 
-import "./InputField.scss"
+import "./AddSection.scss"
 
-const InputField = ({ closeForm, list, setList, grpI }) => {
-  console.log("grp", grpI)
+const AddSection = ({ list, setList, grpI, closeForm, isOpen }) => {
   const [currentValue, setCurrentValue] = useState("")
+
+  const scrollRef = useRef(null)
   const textareaRef = useRef(null)
 
   const groupBGStyle = list.length === grpI ? "task task--group" : "task"
@@ -15,20 +17,22 @@ const InputField = ({ closeForm, list, setList, grpI }) => {
       ? "task__controls task__controls--group"
       : "task__controls"
 
-  console.log(controlsStyle)
+  useEffect(() => {
+    scrollRef.current.scrollIntoView({ block: "center" })
+  }, [isOpen])
 
   useEffect(() => {
+    if (!isOpen) return
     textareaRef.current.style.height = "44px"
 
     if (grpI === list.length) {
-      textareaRef.current.style.height = "24px"
+      textareaRef.current.style.height = "18px"
     }
     const scrollHeight = textareaRef.current.scrollHeight
     textareaRef.current.style.height = scrollHeight + "px"
-  }, [currentValue])
+  }, [currentValue, isOpen])
 
   const inputTextField = (e) => {
-    console.log(e.target.value)
     setCurrentValue(e.target.value)
   }
 
@@ -39,6 +43,7 @@ const InputField = ({ closeForm, list, setList, grpI }) => {
       setCurrentValue("")
       return newList
     })
+    setCurrentValue("")
   }
 
   const addTask = () => {
@@ -48,43 +53,49 @@ const InputField = ({ closeForm, list, setList, grpI }) => {
       setCurrentValue("")
       return newList
     })
+    setCurrentValue("")
   }
 
   const onSubmit = (e) => {
     console.log("submitted")
-    e.preventDefault()
     if (!currentValue.length) return
     if (grpI === list.length) {
       return addList()
     }
     addTask()
   }
+
+  const handleEnterKey = (e) => {
+    if (e.keyCode === 13) {
+      e.preventDefault()
+      onSubmit()
+    }
+  }
+
   return (
-    <div className={groupBGStyle}>
-      <textarea
-        type="text"
-        ref={textareaRef}
-        value={currentValue}
-        onChange={inputTextField}
-        className="task__textarea"
-        placeholder={placeholderValue}
-        autoFocus
-      ></textarea>
-      <div className={controlsStyle}>
-        <input
-          type="submit"
-          onClick={onSubmit}
-          className="task__submit"
-          value="Add task"
-        />
-        <a href="#" onClick={closeForm} className="task__close">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-            <path d="M 4.7070312 3.2929688 L 3.2929688 4.7070312 L 10.585938 12 L 3.2929688 19.292969 L 4.7070312 20.707031 L 12 13.414062 L 19.292969 20.707031 L 20.707031 19.292969 L 13.414062 12 L 20.707031 4.7070312 L 19.292969 3.2929688 L 12 10.585938 L 4.7070312 3.2929688 z" />
-          </svg>
-        </a>
-      </div>
+    <div className={groupBGStyle} ref={scrollRef}>
+      {isOpen && (
+        <>
+          <textarea
+            type="text"
+            ref={textareaRef}
+            value={currentValue}
+            onChange={inputTextField}
+            className="task__textarea"
+            placeholder={placeholderValue}
+            onKeyDown={handleEnterKey}
+            autoFocus
+          ></textarea>
+          <Controls
+            onSubmit={onSubmit}
+            closeForm={closeForm}
+            grpI={grpI}
+            containerStyle={controlsStyle}
+          />
+        </>
+      )}
     </div>
   )
 }
 
-export default InputField
+export default AddSection

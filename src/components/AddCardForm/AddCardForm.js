@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import AddButton from "../AddButton/AddButton"
-import InputField from "../InputField/InputField"
+import AddSection from "../AddSection/AddSection"
 
 import "./AddCardForm.scss"
 
@@ -20,14 +20,15 @@ const AddCardForm = ({ setList, list, grpI }) => {
   return (
     <div className="card-form">
       {isOpen ? (
-        <InputField
-          setList={setList}
+        <AddSection
           list={list}
+          setList={setList}
           grpI={grpI}
           closeForm={closeForm}
+          isOpen={isOpen}
         />
       ) : (
-        <AddButton openForm={openForm} list={list} grpI={grpI} />
+        <AddButton openForm={openForm} grpI={grpI} list={list} />
       )}
     </div>
   )

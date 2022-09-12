@@ -1,4 +1,5 @@
-import DragNDrop from "./components/DragNDrop/DragNDrop"
+import React from "react"
+import DragGroups from "./components/DragGroups/DragGroups"
 
 import "./App.scss"
 
@@ -11,7 +12,7 @@ const App = () => {
   return (
     <div className="App">
       <header className="App-header">
-        <DragNDrop data={data} />
+        <DragGroups data={data} />
       </header>
     </div>
   )

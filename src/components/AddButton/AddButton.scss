@@ -9,6 +9,7 @@
     background-color: transparent;
     color: rgba(207, 207, 207, 0.6);
     text-decoration: none;
+    transition: background-color 0.2s ease;
 
     &:hover {
       background-color: #646d80;

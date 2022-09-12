@@ -1,0 +1,69 @@
+.dnd-group {
+  // max-height: calc(100vh - 80px);
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #49505e;
+}
+
+.dnd-tasks-section {
+  max-height: calc(100vh - 120px);
+  overflow-y: auto;
+
+  &--opened {
+    max-height: calc(100vh - 81px);
+  }
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px #535e73;
+    border-radius: 5px;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background-color: #647087;
+    border-radius: 5px;
+  }
+}
+
+.group-title-edit {
+  display: inline-flex;
+  width: calc(100% - 20px);
+  height: 25px;
+  max-height: 256px;
+  min-height: 20px;
+  padding: 2px 8px;
+  
+  margin-bottom: 4px;
+  font-size: calc(6px + 2vmin);
+  line-height: 100%;
+  border: 2px solid transparent;
+  border-radius: 5px;
+  color: #fff;
+  background: #49505e;
+  box-shadow: none;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  white-space: normal;
+  outline: none;
+  resize: none;
+  cursor: pointer; 
+
+  &:focus {
+    border: 2px solid #27922c;
+    color: #333;
+    background: #fff;
+    cursor: default;
+  }
+}
+
+.card-wrapper {
+  width: 100%;
+  display: flex;
+}
+
+.card__icon {
+  justify-self: flex-end;
+}

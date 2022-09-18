@@ -1,10 +1,10 @@
 import React, { useState } from "react"
 import AddButton from "../AddButton/AddButton"
-import AddSection from "../AddSection/AddSection"
+import AddForm from "../AddForm/AddForm"
 
-import "./AddCardForm.scss"
+import "./SwitchWrapper.scss"
 
-const AddCardForm = ({ setList, list, grpI }) => {
+const SwitchWrapper = ({ setList, list, grpI }) => {
   const [isOpen, setIsOpen] = useState(false)
 
   const openForm = (e) => {
@@ -20,7 +20,7 @@ const AddCardForm = ({ setList, list, grpI }) => {
   return (
     <div className="card-form">
       {isOpen ? (
-        <AddSection
+        <AddForm
           list={list}
           setList={setList}
           grpI={grpI}
@@ -34,4 +34,4 @@ const AddCardForm = ({ setList, list, grpI }) => {
   )
 }
 
-export default AddCardForm
+export default SwitchWrapper

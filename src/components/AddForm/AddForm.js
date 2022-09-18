@@ -1,21 +1,22 @@
 import React, { useEffect, useRef, useState } from "react"
+import { TextareaField } from "../../UI/TextareaField/TextareaField"
 import Controls from "../Controls/Controls"
 
-import "./AddSection.scss"
+import "./AddForm.scss"
 
-const AddSection = ({ list, setList, grpI, closeForm, isOpen }) => {
+const AddForm = ({ list, setList, grpI, closeForm, isOpen }) => {
   const [currentValue, setCurrentValue] = useState("")
 
   const scrollRef = useRef(null)
   const textareaRef = useRef(null)
 
-  const groupBGStyle = list.length === grpI ? "task task--group" : "task"
+  const groupBGStyle = list.length === grpI ? "form form--group" : "form"
   const placeholderValue =
     list.length === grpI ? "Add group name..." : "Add some task here..."
   const controlsStyle =
     list.length === grpI
-      ? "task__controls task__controls--group"
-      : "task__controls"
+      ? "form__controls form__controls--group"
+      : "form__controls"
 
   useEffect(() => {
     scrollRef.current.scrollIntoView({ block: "center" })
@@ -23,12 +24,12 @@ const AddSection = ({ list, setList, grpI, closeForm, isOpen }) => {
 
   useEffect(() => {
     if (!isOpen) return
-    textareaRef.current.style.height = "44px"
+    textareaRef.current.style.height = "50px"
 
     if (grpI === list.length) {
-      textareaRef.current.style.height = "18px"
+      textareaRef.current.style.height = "20px"
     }
-    const scrollHeight = textareaRef.current.scrollHeight
+    const scrollHeight = textareaRef.current.scrollHeight - 6
     textareaRef.current.style.height = scrollHeight + "px"
   }, [currentValue, isOpen])
 
@@ -72,30 +73,54 @@ const AddSection = ({ list, setList, grpI, closeForm, isOpen }) => {
     }
   }
 
+  const focusInCurrentTarget = ({ relatedTarget, currentTarget }) => {
+    if (relatedTarget === null) return false
+
+    let node = relatedTarget.parentNode
+
+    while (node !== null) {
+      if (node === currentTarget) return true
+      node = node.parentNode
+    }
+    return false
+  }
+
+  const onBlur = (e) => {
+    if (!focusInCurrentTarget(e)) {
+      console.log("table blurred")
+      onSubmit()
+      closeForm(e)
+    }
+  }
+
   return (
-    <div className={groupBGStyle} ref={scrollRef}>
+    <form
+      className={groupBGStyle}
+      ref={scrollRef}
+      onSubmit={onSubmit}
+      onBlur={onBlur}
+    >
       {isOpen && (
         <>
-          <textarea
-            type="text"
+          <TextareaField
+            type={"text"}
             ref={textareaRef}
             value={currentValue}
             onChange={inputTextField}
-            className="task__textarea"
+            className="form__textarea"
             placeholder={placeholderValue}
             onKeyDown={handleEnterKey}
-            autoFocus
-          ></textarea>
+            autoFocus={true}
+          />
           <Controls
-            onSubmit={onSubmit}
             closeForm={closeForm}
             grpI={grpI}
             containerStyle={controlsStyle}
           />
         </>
       )}
-    </div>
+    </form>
   )
 }
 
-export default AddSection
+export default AddForm

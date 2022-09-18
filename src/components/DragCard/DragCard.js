@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react"
+import { TextareaField } from "../../UI/TextareaField/TextareaField"
 
 import "./DragCard.scss"
 
@@ -20,9 +21,9 @@ const DragCard = ({
   const len = cardBody.length
 
   useEffect(() => {
-    editRef.current.style.height = "16px"
-
-    const scrollHeight = editRef.current.scrollHeight
+    editRef.current.style.height = "10px"
+    editRef.current.style.pointerEvents = "none"
+    const scrollHeight = editRef.current.scrollHeight - 12
     editRef.current.style.height = scrollHeight + "px"
   }, [cardBody])
 
@@ -38,12 +39,13 @@ const DragCard = ({
     const isMatch =
       currentItem.grpI === params.grpI && currentItem.itemI === params.itemI
     if (isMatch) {
-      return "current dnd-item"
+      console.log("match")
+      return "card__current card__item"
     }
-    return "dnd-item"
+    return "card__item"
   }
 
-  const editCard = (e) => {
+  const editCard = () => {
     setList((oldList) => {
       const newList = JSON.parse(JSON.stringify(oldList))
       newList[grpI].items[itemI] = cardBody
@@ -52,7 +54,14 @@ const DragCard = ({
     setIsEditable(false)
   }
 
+  const editHandler = (e) => {
+    e.preventDefault()
+    e.stopPropagation()
+    setCardBody(e.target.value)
+  }
+
   const setEditable = (e) => {
+    e.preventDefault()
     setIsEditable(true)
   }
 
@@ -69,15 +78,19 @@ const DragCard = ({
             }
           : null
       }
-      className={isDragging ? getStyles({ grpI, itemI }) : "dnd-item"}
+      className={
+        isDragging ? getStyles({ grpI, itemI }) : "card__item card__hover"
+      }
     >
-      <textarea
+      <TextareaField
+        type={"text"}
         ref={editRef}
+        className={"card__body"}
         value={cardBody}
-        onChange={(e) => setCardBody(e.target.value)}
+        onChange={editHandler}
         onBlur={editCard}
         disabled={!isEditable}
-      ></textarea>
+      />
       <span className="card__icon" onClick={setEditable}>
         <svg
           version="1.1"

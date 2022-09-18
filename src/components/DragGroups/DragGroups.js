@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react"
-import AddCardForm from "../AddCardForm/AddCardForm"
+import SwitchWrapper from "../SwitchWrapper/SwitchWrapper"
 
 import "./DragGroups.scss"
 import DragGroup from "../DragGroup/DragGroup"
@@ -7,14 +7,14 @@ import DragGroup from "../DragGroup/DragGroup"
 const DragGroups = ({ data }) => {
   const [list, setList] = useState(data)
   const [isDragging, setIsDragging] = useState(false)
-
+  console.log(list)
   const dragItem = useRef()
   const dragNode = useRef()
 
   const handleDragStart = (e, params) => {
-    console.log("drag starting", params)
+    console.log("drag starting")
     dragItem.current = params
-    dragNode.current = e.target
+    dragNode.current = e.currentTarget
     dragNode.current.addEventListener("dragend", handleDragEnd)
     setTimeout(() => {
       setIsDragging(true)
@@ -23,11 +23,9 @@ const DragGroups = ({ data }) => {
 
   const handleDragEnter = (e, params) => {
     const currentItem = dragItem.current
-
-    if (e.target !== dragNode.current) {
+    if (e.currentTarget !== dragNode.current) {
       console.log("not same")
       setList((oldList) => {
-        console.log("old", oldList)
         let newList = JSON.parse(JSON.stringify(oldList))
         newList[params.grpI].items.splice(
           params.itemI,
@@ -35,7 +33,6 @@ const DragGroups = ({ data }) => {
           newList[currentItem.grpI].items.splice(currentItem.itemI, 1)[0]
         )
         dragItem.current = params
-        console.log("new", newList)
         return newList
       })
     }
@@ -65,7 +62,7 @@ const DragGroups = ({ data }) => {
           />
         </div>
       ))}
-      <AddCardForm setList={setList} list={list} grpI={list.length} />
+      <SwitchWrapper setList={setList} list={list} grpI={list.length} />
     </div>
   )
 }

@@ -1,101 +1,87 @@
-.dnd-item {
-  width: 100%;
-  margin-bottom: 10px;
-  min-height: 28px;
-  padding: 8px;
-  display: flex;
-  justify-content: start;
-  align-items: center;
-  border-radius: 5px;
-  background-color: #fff;
-  box-shadow: 0px 2px 0px #979797;
-  // transition: background-color 0.2s ease;
-  text-align: start;
-  overflow: hidden;
-  position: relative;
-  user-select: none;
-  cursor: pointer;
-
-  &:hover {
-    background-color: rgb(236, 236, 236);
-  }
-}
-
-.dnd-item * {
-  margin: 0;
-}
-.dnd-item textarea {
-  flex: 1;
-  width: 100%;
-  font-size: calc(6px + 1.5vmin);
-  line-height: 100%;
-  background-color: transparent;
-  color: #282c34;
-  border: none;
-  box-shadow: none;
-  overflow-wrap: break-word;
-  white-space: normal;
-  overflow: hidden;
-  outline: none;
-  resize: none;
-  user-select: text;
-  cursor: pointer;
-}
-
-.card__icon {
-  display: none;
-  position: absolute;
-  top: 5px;
-  right: 5px;
-  width: 16px;
-  height: 16px;
-  padding: 10px;
-  margin-left: 5px;
-  justify-self: flex-end;
-  border-radius: 5px;
-  background-color: rgba(236, 236, 236, 0.8);
-  transition: background-color 0.2s ease;
-  z-index: 10;
-
-  svg {
+.card {
+  &__item {
     width: 100%;
-  height: 100%;
-  vertical-align:text-top;
-  }
-
-  &:hover {
-    background-color: rgba(199, 199, 199, 0.5);
-  }
-
-  &:active {
-    background-color: rgba(183, 183, 183, 0.5);
-  }
-}
-
-.current {
-  background-color: #282c34;
-}
-
-.dnd-item:hover > .card__icon {
-  display: inline-block;
+    margin-bottom: 10px;
+    min-height: 28px;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    border-radius: 5px;
+    background-color: #fff;
+    text-align: start;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: pointer;
   
+    &:hover {
+      background-color: rgb(236, 236, 236);
+    }
+  
+    &.card__current {
+      user-select: none;
+      background-color: #282c34;
+    }
+  
+    * {
+      margin: 0;
+    }
+  }
+
+  &__body {
+    flex: 1;
+    width: 100%;
+    font-size: 21px;
+    padding: 8px;
+    background-color: transparent;
+    color: #282c34;
+
+    &:focus + .card__icon {
+      display: none;
+    }
+  }
+
+  &__icon {
+    justify-self: flex-end;
+    display: none;
+    position: absolute;
+    top: 4.5px;
+    right: 5px;
+    width: 16px;
+    height: 16px;
+    padding: 10px;
+    margin-left: 5px;
+    justify-self: flex-end;
+    border-radius: 5px;
+    background-color: rgba(236, 236, 236, 0.8);
+    transition: background-color 0.2s ease;
+    z-index: 10;
+  
+    svg {
+      width: 100%;
+      height: 100%;
+      vertical-align:text-top;
+    }
+  
+    &:hover {
+      background-color: rgba(199, 199, 199, 0.5);
+    }
+  
+    &:active {
+      background-color: rgba(183, 183, 183, 0.5);
+    }
+  }
+
+  &__hover {
+    &:hover {
+        background-color: rgb(236, 236, 236);
+    }
+    &:hover > .card__icon {
+      display: inline-block;
+    }
+  }
 }
-
-
-
-// .group-header {
-//   width: 100%;
-//   padding: 2px;
-// }
-// .group-title {
-//   display: block;
-//   padding: 0px 8px 13px 10px;
-//   margin: -1px 0px 0px 0px;
-//   font-size: calc(6px + 2vmin);
-//   text-align: left;
-
-//   &--closed {
-//     display: none;
-//   }
-// }
-

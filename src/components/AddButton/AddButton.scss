@@ -34,17 +34,12 @@
     
   }
   &__icon{
+    width: 20px;
+    height: 100%;
     margin-right: 5px;
 
     svg {
-      width: 20px;
-      height: 20px;
       fill: rgba(207, 207, 207, 0.6);
-
-      path {
-        width: 20px;
-        height: 20px;
-      }
     }
   }
   &__title {

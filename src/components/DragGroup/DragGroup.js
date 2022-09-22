@@ -5,6 +5,9 @@ import AddButton from "../AddButton/AddButton"
 import "./DragGroup.scss"
 import DragCard from "../DragCard/DragCard"
 import { TextareaField } from "../../UI/TextareaField/TextareaField"
+import SvgIcon from "../../UI/SvgIcon/SvgIcon"
+import Modal from "../Modal/Modal"
+import useModal from "../../hooks/useModal"
 
 const DragGroup = ({
   handleDragStart,
@@ -17,11 +20,18 @@ const DragGroup = ({
   list,
 }) => {
   const [isOpen, setIsOpen] = useState(false)
+  // const [modal, setModal] = useState(false)
   const [title, setTitle] = useState(grp.title)
+
+  const { isShowing, toggle } = useModal()
 
   const titleRef = useRef(null)
 
   const sectionHeightStyle = isOpen ? "card card--opened" : "card"
+
+  useEffect(() => {
+    setTitle(grp.title)
+  }, [list])
 
   useEffect(() => {
     titleRef.current.style.height = "24px"
@@ -51,8 +61,30 @@ const DragGroup = ({
     e.stopPropagation()
     setIsOpen(false)
   }
+
   const handleTitle = (e) => {
     setTitle(e.target.value)
+  }
+
+  const copyGroup = (e) => {
+    setList([...list, list[grpI]])
+    toggle(e)
+  }
+
+  const changeElementPosition = (array, from, to) => {
+    const copy = JSON.parse(JSON.stringify(array))
+    const valueToMove = copy.splice(from, 1)[0]
+    copy.splice(to, 0, valueToMove)
+    return copy
+  }
+
+  const moveGroup = (e) => {
+    let c = prompt(
+      `enter column where you want to move group(from - 1, to - ${list.length})`,
+      0
+    )
+    setList(changeElementPosition(list, grpI, c - 1))
+    toggle(e)
   }
 
   return (
@@ -74,22 +106,17 @@ const DragGroup = ({
           onKeyDown={handleEnter}
           onBlur={onBlurArea}
         />
-        <span className="title__icon">
-          <svg
-            version="1.1"
-            id="Layer_1"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 92 92"
-          >
-            <path
-              d="M21,53c-1.8,0-3.7-0.8-5-2.1c-1.3-1.3-2-3.1-2-4.9c0-1.8,0.8-3.6,2-5c1.3-1.3,3.1-2,5-2c1.8,0,3.6,0.8,4.9,2
-            c1.3,1.3,2.1,3.1,2.1,5c0,1.8-0.8,3.6-2.1,4.9C24.6,52.2,22.8,53,21,53z M50.9,50.9c1.3-1.3,2.1-3.1,2.1-4.9c0-1.8-0.8-3.6-2.1-5
-            c-1.3-1.3-3.1-2-4.9-2c-1.8,0-3.7,0.8-5,2c-1.3,1.3-2,3.1-2,5c0,1.8,0.8,3.6,2,4.9c1.3,1.3,3.1,2.1,5,2.1
-            C47.8,53,49.6,52.2,50.9,50.9z M75.9,50.9c1.3-1.3,2.1-3.1,2.1-4.9c0-1.8-0.8-3.6-2.1-5c-1.3-1.3-3.1-2-4.9-2c-1.8,0-3.7,0.8-5,2
-            c-1.3,1.3-2,3.1-2,5c0,1.8,0.8,3.6,2,4.9c1.3,1.3,3.1,2.1,5,2.1C72.8,53,74.6,52.2,75.9,50.9z"
-            />
-          </svg>
-        </span>
+        <div className="title__settings">
+          <span className="title__icon" onClick={toggle}>
+            <SvgIcon icon="settings" />
+          </span>
+          <Modal
+            isShowing={isShowing}
+            hide={toggle}
+            copyGroup={copyGroup}
+            moveGroup={moveGroup}
+          />
+        </div>
       </div>
       <div className={sectionHeightStyle}>
         {grp.items.map((item, itemI) => (

@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react"
+import SvgIcon from "../../UI/SvgIcon/SvgIcon"
 import { TextareaField } from "../../UI/TextareaField/TextareaField"
 
 import "./DragCard.scss"
@@ -92,7 +93,8 @@ const DragCard = ({
         disabled={!isEditable}
       />
       <span className="card__icon" onClick={setEditable}>
-        <svg
+        <SvgIcon icon="edit" />
+        {/* <svg
           version="1.1"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 217.855 217.855"
@@ -104,7 +106,7 @@ const DragCard = ({
 	C218.587,61.228,218.587,56.479,215.658,53.55z M57.264,201.336l-42.024,1.28l1.279-42.026l91.124-91.125l40.75,40.743
 	L57.264,201.336z M159,99.602l-40.751-40.742l40.752-40.753l40.746,40.747L159,99.602z"
           />
-        </svg>
+        </svg> */}
       </span>
     </div>
   )

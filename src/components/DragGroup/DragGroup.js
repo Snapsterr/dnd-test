@@ -20,7 +20,6 @@ const DragGroup = ({
   list,
 }) => {
   const [isOpen, setIsOpen] = useState(false)
-  // const [modal, setModal] = useState(false)
   const [title, setTitle] = useState(grp.title)
 
   const { isShowing, toggle } = useModal()
@@ -78,12 +77,19 @@ const DragGroup = ({
     return copy
   }
 
-  const moveGroup = (e) => {
-    let c = prompt(
-      `enter column where you want to move group(from - 1, to - ${list.length})`,
-      0
-    )
-    setList(changeElementPosition(list, grpI, c - 1))
+  const moveGroup = (e, moveTo) => {
+    if (moveTo > list.length) return alert("Wrong number of column. Try again")
+    setList(changeElementPosition(list, grpI, moveTo - 1))
+    toggle(e)
+  }
+
+  const deleteGroup = (e) => {
+    setList((oldList) => {
+      const newList = JSON.parse(JSON.stringify(oldList))
+      newList.splice(grpI, 1)[0]
+
+      return newList
+    })
     toggle(e)
   }
 
@@ -115,6 +121,8 @@ const DragGroup = ({
             hide={toggle}
             copyGroup={copyGroup}
             moveGroup={moveGroup}
+            deleteGroup={deleteGroup}
+            grpI={grpI}
           />
         </div>
       </div>
@@ -122,7 +130,6 @@ const DragGroup = ({
         {grp.items.map((item, itemI) => (
           <div className="card__wrapper" key={item + itemI}>
             <DragCard
-              grp={grp}
               grpI={grpI}
               handleDragStart={handleDragStart}
               handleDragEnter={handleDragEnter}
@@ -141,7 +148,6 @@ const DragGroup = ({
           grpI={grpI}
           closeForm={closeForm}
           isOpen={isOpen}
-          setIsOpen={setIsOpen}
         />
       </div>
       <AddButton openForm={openForm} grpI={grpI} isOpen={isOpen} list={list} />

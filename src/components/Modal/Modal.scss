@@ -66,8 +66,6 @@
   &__close-button {
     position: absolute;
     top: 10px;
-    right: 10px;
-    width: 28px;
     height: 28px;
     border-radius: 5px;
     background-color: transparent;
@@ -79,6 +77,16 @@
     
     cursor: pointer;
 
+    &--right {
+      right: 10px;
+      width: 28px;
+    }
+
+    &--left {
+      left: 10px;
+      width: 26px;
+    }
+
     svg {
       fill: #fff;
     }
@@ -89,6 +97,70 @@
 
     &:active {
       background-color: #3e4350;
+    }
+  }
+}
+
+.position {
+  margin: 0px 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+  box-sizing: border-box;
+
+  &__item {
+    width: 100%;
+    margin-top: 8px;
+    padding: 8px 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: start;
+    border-radius: 5px;
+    background-color: #4d5464;
+    box-sizing: border-box;
+    
+    &:not(:first-child),
+    &:not(:first-child) > .position__name,
+    &:not(:first-child) > .position__input {
+      cursor: pointer;
+    } 
+    &:not(:first-child) > .position__input:focus {
+      cursor: text;
+    }   
+  }
+
+  &__name {
+    width: 100%;
+    margin-bottom: 10px;
+    font-size: 20px;
+    box-sizing: border-box;
+    line-height: 100%;
+  }
+  
+  &__input {
+    width: 100%;
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 16px;
+    line-height: 100%;
+    border: 2px solid transparent;
+    outline: none;
+    box-sizing: border-box;
+    
+
+    &:disabled {
+      color: #000;
+      background-color: #fff;
+    }
+
+    &::placeholder {
+      font-size: 14px;
+    }
+
+    &:focus {
+      border: 2px solid #27922c;
     }
   }
 }

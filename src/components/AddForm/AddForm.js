@@ -116,6 +116,8 @@ const AddForm = ({ list, setList, grpI, closeForm, isOpen }) => {
             closeForm={closeForm}
             grpI={grpI}
             containerStyle={controlsStyle}
+            icon={true}
+            value="Add task"
           />
         </>
       )}

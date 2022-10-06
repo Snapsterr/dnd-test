@@ -85,6 +85,21 @@ const SvgIcon = ({ icon }) => {
     </svg>
   )
 
+  const trash = (
+    <svg viewBox="-5 0 64 64" version="1.1" xmlns="http://www.w3.org/2000/svg">
+      <g id="Page-1" fill="#ffffff" strokeWidth="1">
+        <g stroke="#ffffff">
+          <path d="M48,13.8 L43.9,59.2 C43.9,60.7 42.7,62 41.1,62 L10.9,62 C9.4,62 8.1,60.8 8.1,59.2 L4,13.8"></path>
+          <path d="M8.8,13.9 L2.6,13.9 C1.2,13.9 0,12.7 0,11.3 L0,8.7 C0,7.2 1.2,6.1 2.6,6.1 L49.3,6.1 C50.7,6.1 51.9,7.3 51.9,8.7 L51.9,11.3 C51.9,12.8 50.7,13.9 49.3,13.9 L43.1,13.9"></path>
+          <path d="M25.9,19 L25.9,54"></path>
+          <path d="M14.9,19 L16.3,53.9"></path>
+          <path d="M36.9,19.1 L35.6,53.9"></path>
+          <rect id="Rectangle-path"></rect>
+        </g>
+      </g>
+    </svg>
+  )
+
   switch (icon) {
     case "edit":
       return edit
@@ -103,6 +118,9 @@ const SvgIcon = ({ icon }) => {
 
     case "back":
       return back
+
+    case "trash":
+      return trash
 
     default:
       return null

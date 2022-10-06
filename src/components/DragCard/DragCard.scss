@@ -11,18 +11,30 @@
     text-align: start;
     overflow: hidden;
     position: relative;
-    cursor: pointer;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
     cursor: pointer;
-  
+
+    transition: background-color 0.2s ease;
+
     &:hover {
       background-color: rgb(236, 236, 236);
     }
 
+    &--success {
+      background-color: #27922c;
+
+      &:hover {
+        background-color: #228027;
+      }
+    }
+  
     
+    &:hover > .card__body {
+      text-decoration: none;
+    }
   
     &.card__current {
       user-select: none;
@@ -35,15 +47,12 @@
   }
 
   &__hover {
-    &:hover {
-        background-color: rgb(236, 236, 236);
-    }
-    &:hover > .card__icon--edit {
-      display: inline-block;
+    &:hover > .card__icon-hover {
+      display: flex;
     }
 
-    &:hover > .card__body:focus + span + .card__icon--correct  {
-      display: inline-block;
+    &:hover > .card__body:focus ~ .card__icon-focus  {
+      display: flex;
     }
   }
 
@@ -54,25 +63,36 @@
     padding: 8px;
     background-color: transparent;
     color: #282c34;
-    
-    &:focus + .card__icon--edit {
-      display: none;
+
+    &--success {
+      color: #fff;
+      font-style: italic;
+      text-decoration: line-through;
     }
-    // &:focus + span + .card__icon--correct {
-    //   display: inline-block;
-    // }
+    &--dragging {
+      color: #282c34;
+    }
     
+    &:focus + .card__icon-hover {
+      display: none;
+    }    
+  }
+
+  &__icon-hover,
+  &__icon-focus {
+    display: none;
+    position: absolute;
+    top: 7px;
+    right: 7px;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
   }
 
   &__icon {
-    justify-self: flex-end;
-    display: none;
-    position: absolute;
-    top: 4.5px;
-    right: 5px;
     width: 16px;
     height: 16px;
-    padding: 10px;
+    padding: 8px;
     margin-left: 5px;
     justify-self: flex-end;
     border-radius: 5px;
@@ -103,6 +123,21 @@
     
       &:active {
         background-color: rgba(30, 112, 34, 0.7);
+      }
+    }
+
+    &--delete {
+      background-color: rgba(218, 34, 21, 0.8);
+      svg {
+        fill: #fff;
+      }
+
+      &:hover {
+        background-color: rgba(184, 28, 17, 0.8)
+      }
+    
+      &:active {
+        background-color: rgba(174, 24, 13, 0.8);
       }
     }
   

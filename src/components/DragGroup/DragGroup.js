@@ -1,13 +1,14 @@
 import React, { useEffect, useRef, useState } from "react"
 import AddForm from "../AddForm/AddForm"
 import AddButton from "../AddButton/AddButton"
-
-import "./DragGroup.scss"
 import DragCard from "../DragCard/DragCard"
 import { TextareaField } from "../../UI/TextareaField/TextareaField"
 import SvgIcon from "../../UI/SvgIcon/SvgIcon"
 import Modal from "../Modal/Modal"
 import useModal from "../../hooks/useModal"
+import { autoHeightArea } from "../../helpers/autoHeightArea"
+
+import "./DragGroup.scss"
 
 const DragGroup = ({
   handleDragStart,
@@ -25,6 +26,7 @@ const DragGroup = ({
   const { isShowing, toggle } = useModal()
 
   const titleRef = useRef(null)
+  const scrollRef = useRef(null)
 
   const sectionHeightStyle = isOpen ? "card card--opened" : "card"
 
@@ -33,9 +35,11 @@ const DragGroup = ({
   }, [list])
 
   useEffect(() => {
-    titleRef.current.style.height = "24px"
-    const scrollHeight = titleRef.current.scrollHeight
-    titleRef.current.style.height = scrollHeight + "px"
+    scrollRef.current.scrollIntoView()
+  }, [isOpen])
+
+  useEffect(() => {
+    autoHeightArea(titleRef, 24, 0)
   }, [title])
 
   const onBlurArea = () => {
@@ -65,22 +69,20 @@ const DragGroup = ({
     setTitle(e.target.value)
   }
 
-  const copyGroup = (e) => {
-    setList([...list, list[grpI]])
-    toggle(e)
+  const copyGroup = (e, name) => {
+    setList([...list, { title: name, items: list[grpI].items }])
   }
 
   const changeElementPosition = (array, from, to) => {
-    const copy = JSON.parse(JSON.stringify(array))
-    const valueToMove = copy.splice(from, 1)[0]
-    copy.splice(to, 0, valueToMove)
-    return copy
+    const copyArr = JSON.parse(JSON.stringify(array))
+    const valueToMove = copyArr.splice(from, 1)[0]
+    copyArr.splice(to, 0, valueToMove)
+    return copyArr
   }
 
   const moveGroup = (e, moveTo) => {
     if (moveTo > list.length) return alert("Wrong number of column. Try again")
     setList(changeElementPosition(list, grpI, moveTo - 1))
-    toggle(e)
   }
 
   const deleteGroup = (e) => {
@@ -94,17 +96,10 @@ const DragGroup = ({
   }
 
   return (
-    <div
-      onDragEnter={
-        isDragging && !grp.items.length
-          ? (e) => handleDragEnter(e, { grpI, itemI: 0 })
-          : null
-      }
-      className="dnd-group"
-    >
+    <div className="dnd-group">
       <div className="title__wrapper">
         <TextareaField
-          type={"text"}
+          type="text"
           ref={titleRef}
           value={title}
           onChange={handleTitle}
@@ -127,20 +122,22 @@ const DragGroup = ({
         </div>
       </div>
       <div className={sectionHeightStyle}>
-        {grp.items.map((item, itemI) => (
-          <div className="card__wrapper" key={item + itemI}>
-            <DragCard
-              grpI={grpI}
-              handleDragStart={handleDragStart}
-              handleDragEnter={handleDragEnter}
-              isDragging={isDragging}
-              item={item}
-              itemI={itemI}
-              dragItem={dragItem}
-              setList={setList}
-            />
-          </div>
-        ))}
+        {grp.items.map((item, itemI) => {
+          return (
+            <div className="card__wrapper" key={item.task + itemI}>
+              <DragCard
+                grpI={grpI}
+                handleDragStart={handleDragStart}
+                handleDragEnter={handleDragEnter}
+                isDragging={isDragging}
+                item={item}
+                itemI={itemI}
+                dragItem={dragItem}
+                setList={setList}
+              />
+            </div>
+          )
+        })}
 
         <AddForm
           setList={setList}
@@ -149,6 +146,7 @@ const DragGroup = ({
           closeForm={closeForm}
           isOpen={isOpen}
         />
+        <div ref={scrollRef}></div>
       </div>
       <AddButton openForm={openForm} grpI={grpI} isOpen={isOpen} list={list} />
     </div>

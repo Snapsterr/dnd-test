@@ -13,6 +13,7 @@ const SwitchWrapper = ({ setList, list, grpI }) => {
   }
 
   const closeForm = (e) => {
+    e.preventDefault()
     e.stopPropagation()
     setIsOpen(false)
   }

@@ -1,18 +1,28 @@
-import React, { useRef, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import SwitchWrapper from "../SwitchWrapper/SwitchWrapper"
+import DragGroup from "../DragGroup/DragGroup"
+import { storage } from "../../helpers/storage"
 
 import "./DragGroups.scss"
-import DragGroup from "../DragGroup/DragGroup"
 
-const DragGroups = ({ data }) => {
-  const [list, setList] = useState(data)
+const defaultData = [
+  { title: "Upcoming", items: [] },
+  { title: "In Progress", items: [] },
+  { title: "Done", items: [] },
+]
+
+const DragGroups = () => {
+  const [list, setList] = useState(storage.getItem("data") || defaultData)
   const [isDragging, setIsDragging] = useState(false)
-  console.log(list)
+
   const dragItem = useRef()
   const dragNode = useRef()
 
+  useEffect(() => {
+    storage.setItem("data", list)
+  }, [list])
+
   const handleDragStart = (e, params) => {
-    console.log("drag starting")
     dragItem.current = params
     dragNode.current = e.currentTarget
     dragNode.current.addEventListener("dragend", handleDragEnd)
@@ -24,7 +34,6 @@ const DragGroups = ({ data }) => {
   const handleDragEnter = (e, params) => {
     const currentItem = dragItem.current
     if (e.currentTarget !== dragNode.current) {
-      console.log("not same")
       setList((oldList) => {
         let newList = JSON.parse(JSON.stringify(oldList))
         newList[params.grpI].items.splice(
@@ -39,7 +48,6 @@ const DragGroups = ({ data }) => {
   }
 
   const handleDragEnd = () => {
-    console.log("drag end")
     setIsDragging(false)
     dragNode.current.removeEventListener("dragend", handleDragEnd)
     dragItem.current = null
@@ -49,7 +57,15 @@ const DragGroups = ({ data }) => {
   return (
     <div className="drag-n-drop">
       {list.map((grp, grpI) => (
-        <div key={grpI}>
+        <div
+          className="group-wrapper"
+          onDragEnter={
+            isDragging && !grp.items.length
+              ? (e) => handleDragEnter(e, { grpI, itemI: 0 })
+              : null
+          }
+          key={grpI}
+        >
           <DragGroup
             grp={grp}
             grpI={grpI}

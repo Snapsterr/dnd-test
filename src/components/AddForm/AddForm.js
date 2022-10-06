@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react"
+import { autoHeightArea } from "../../helpers/autoHeightArea"
 import { TextareaField } from "../../UI/TextareaField/TextareaField"
 import Controls from "../Controls/Controls"
 
@@ -7,30 +8,28 @@ import "./AddForm.scss"
 const AddForm = ({ list, setList, grpI, closeForm, isOpen }) => {
   const [currentValue, setCurrentValue] = useState("")
 
-  const scrollRef = useRef(null)
   const textareaRef = useRef(null)
+  const wrapperRef = useRef(null)
 
-  const groupBGStyle = list.length === grpI ? "form form--group" : "form"
-  const placeholderValue =
-    list.length === grpI ? "Add group name..." : "Add some task here..."
-  const controlsStyle =
-    list.length === grpI
-      ? "form__controls form__controls--group"
-      : "form__controls"
+  const isLast = list.length === grpI
 
-  useEffect(() => {
-    scrollRef.current.scrollIntoView({ block: "center" })
-  }, [isOpen])
+  const groupBGStyle = isLast ? "form form--group" : "form"
+  const placeholderValue = isLast
+    ? "Add group name..."
+    : "Add some task here..."
+  const controlsStyle = isLast
+    ? "form__controls form__controls--group"
+    : "form__controls"
+  const buttonText = isLast ? "Add group" : "Add task"
 
   useEffect(() => {
     if (!isOpen) return
-    textareaRef.current.style.height = "50px"
 
-    if (grpI === list.length) {
-      textareaRef.current.style.height = "20px"
+    autoHeightArea(textareaRef, 50, 6)
+
+    if (isLast) {
+      textareaRef.current.style.height = "24px"
     }
-    const scrollHeight = textareaRef.current.scrollHeight - 6
-    textareaRef.current.style.height = scrollHeight + "px"
   }, [currentValue, isOpen])
 
   const inputTextField = (e) => {
@@ -39,67 +38,59 @@ const AddForm = ({ list, setList, grpI, closeForm, isOpen }) => {
 
   const addList = () => {
     setList((oldList) => {
-      const newList = JSON.parse(JSON.stringify(oldList))
-      newList.push({ title: currentValue, items: [] })
       setCurrentValue("")
-      return newList
+      return [...oldList, { title: currentValue, items: [] }]
     })
-    setCurrentValue("")
   }
 
   const addTask = () => {
     setList((oldList) => {
       const newList = JSON.parse(JSON.stringify(oldList))
-      newList[grpI].items.push(currentValue)
+      newList[grpI].items.push({
+        task: currentValue,
+        isDone: false,
+      })
       setCurrentValue("")
       return newList
     })
-    setCurrentValue("")
   }
 
   const onSubmit = (e) => {
-    console.log("submitted")
     if (!currentValue.length) return
-    if (grpI === list.length) {
+    if (isLast) {
+      closeForm(e)
       return addList()
     }
     addTask()
+    closeForm(e)
   }
 
   const handleEnterKey = (e) => {
     if (e.keyCode === 13) {
-      e.preventDefault()
-      onSubmit()
+      onSubmit(e)
     }
   }
 
-  const focusInCurrentTarget = ({ relatedTarget, currentTarget }) => {
-    if (relatedTarget === null) return false
-
-    let node = relatedTarget.parentNode
-
-    while (node !== null) {
-      if (node === currentTarget) return true
-      node = node.parentNode
+  useEffect(() => {
+    const checkIfClickedOutside = (e) => {
+      if (
+        isOpen &&
+        wrapperRef.current &&
+        !wrapperRef.current.contains(e.target)
+      ) {
+        onSubmit(e)
+        closeForm(e)
+      }
     }
-    return false
-  }
+    document.addEventListener("mousedown", checkIfClickedOutside)
 
-  const onBlur = (e) => {
-    if (!focusInCurrentTarget(e)) {
-      console.log("table blurred")
-      onSubmit()
-      closeForm(e)
+    return () => {
+      document.removeEventListener("mousedown", checkIfClickedOutside)
     }
-  }
+  }, [isOpen, onSubmit])
 
   return (
-    <form
-      className={groupBGStyle}
-      ref={scrollRef}
-      onSubmit={onSubmit}
-      onBlur={onBlur}
-    >
+    <form className={groupBGStyle} ref={wrapperRef} tabIndex="0">
       {isOpen && (
         <>
           <TextareaField
@@ -117,7 +108,8 @@ const AddForm = ({ list, setList, grpI, closeForm, isOpen }) => {
             grpI={grpI}
             containerStyle={controlsStyle}
             icon={true}
-            value="Add task"
+            onClickHandler={onSubmit}
+            value={buttonText}
           />
         </>
       )}

@@ -7,7 +7,6 @@ const useModal = () => {
     e.preventDefault()
     e.stopPropagation()
     setIsShowing(!isShowing)
-    console.log("toggle")
   }
 
   return {

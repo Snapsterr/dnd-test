@@ -1,0 +1,18 @@
+.modal {
+  &__wrapper {
+    width: 100%;
+    margin: 16px 0px 8px 0px;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+  }
+
+  &__name {
+    margin: 0px 10px;
+    padding-bottom: 16px;
+    font-size: 16px;
+    line-height: 100%;
+    border-bottom: 1px solid #ccc;
+    text-align: center;
+  }
+}

@@ -13,10 +13,10 @@ textarea {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  cursor: pointer;
+  // cursor: pointer;
 
   &:focus {
     border: 2px solid #27922c;
-    cursor: text;
+    // cursor: text;
   }
 }

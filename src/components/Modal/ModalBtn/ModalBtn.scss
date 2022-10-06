@@ -1,0 +1,38 @@
+.modal {
+  &__close-button {
+    position: absolute;
+    top: 10px;
+    height: 28px;
+    border-radius: 5px;
+    background-color: transparent;
+    border: none;
+    
+    outline: none;
+    text-align: top;
+    transition: background-color 0.2s ease;
+    
+    cursor: pointer;
+
+    &--right {
+      right: 10px;
+      width: 28px;
+    }
+
+    &--left {
+      left: 10px;
+      width: 26px;
+    }
+
+    svg {
+      fill: #fff;
+    }
+
+    &:hover {
+      background-color: #4d5464;
+    }
+
+    &:active {
+      background-color: #3e4350;
+    }
+  }
+}

@@ -13,10 +13,6 @@ const SubMenuBody = ({ subMenu, copyGroup, moveGroup, closeModal, grpI }) => {
 
   useEffect(() => {
     if (subMenu !== "copyMenu") return
-    // copyTitleRef.current.style.height = "55px"
-
-    // const scrollHeight = copyTitleRef?.current.scrollHeight
-    // copyTitleRef.current.style.height = scrollHeight + "px"
     autoHeightArea(copyTitleRef, 55, 0)
   }, [copyTitle])
 

@@ -1,70 +1,39 @@
-# Getting Started with Create React App
+Project for test DragNDrop(some functionality from trello) on React([Link to preview gif](#preview-of-the-project))
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+&nbsp;
 
-## Available Scripts
+<strong>Link to GitHub-Pages of this app:</strong>
+<strong><a href="https://snapsterr.github.io/dnd-test/">DragNDrop-test</a></strong>
 
-In the project directory, you can run:
+&nbsp;
 
-### `npm start`
+<strong>To start the project follow the next steps:</strong>
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- 'npm install'
+- 'npm i node-sass'
+- 'npm start'
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+<strong>Functionality of the DragNDrop-test project:</strong>
 
-### `npm test`
+- creating new lists;
+- creating new tasks;
+- change the title of the list by clicking on this area and save it by clicking outside the box after editing or on enter key;
+- open context menu with actions by clicking icon on the top right side of list:
+  1. copy submenu - copy selected list with new title;
+  2. move submenu - move selected list from current position to typed;
+  3. delete submenu - delete selected list;
+- move a task from one list to another by dragging it to the desired column of the list;
+- change task status to completed or not(completed tasks with green background and line-through on text while no hover)
+- control buttons on task hover with(from left to right):
+  1. button that sets the task to completed (if the task is completed, it changes to the opposite button);
+  2. button for editing(dissapear if task is complited). For save edited task click button / by clicking outside the box;
+  3. button for deleting task;
+- list is saving in localstorage.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+&nbsp;
 
-### `npm run build`
+### Preview of the project
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+&nbsp;
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+<img src="./demo-dnd-test.gif" alt="overview" align="center" />

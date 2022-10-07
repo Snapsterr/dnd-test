@@ -4,7 +4,7 @@
     margin-bottom: 10px;
     min-height: 28px;
     display: flex;
-    justify-content: start;
+    justify-content: flex-start;
     align-items: center;
     border-radius: 5px;
     background-color: #fff;
@@ -30,7 +30,6 @@
         background-color: #228027;
       }
     }
-  
     
     &:hover > .card__body {
       text-decoration: none;
@@ -128,6 +127,7 @@
 
     &--delete {
       background-color: rgba(218, 34, 21, 0.8);
+      
       svg {
         fill: #fff;
       }
@@ -144,7 +144,5 @@
     svg {
       vertical-align:text-top;
     }
-  
-    
   }
 }

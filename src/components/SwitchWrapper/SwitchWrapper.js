@@ -2,8 +2,6 @@ import React, { useState } from "react"
 import AddButton from "../AddButton/AddButton"
 import AddForm from "../AddForm/AddForm"
 
-import "./SwitchWrapper.scss"
-
 const SwitchWrapper = ({ setList, list, grpI }) => {
   const [isOpen, setIsOpen] = useState(false)
 

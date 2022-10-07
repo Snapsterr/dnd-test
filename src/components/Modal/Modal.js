@@ -1,6 +1,5 @@
 import React, { useState } from "react"
 import SvgIcon from "../../UI/SvgIcon/SvgIcon"
-import Controls from "../Controls/Controls"
 import ModalHeader from "./ModalHeader/ModalHeader"
 
 import "./Modal.scss"

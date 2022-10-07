@@ -3,7 +3,7 @@
     padding-left: 10px;
     display: flex;
     flex-direction: row;
-    justify-content: start;
+    justify-content: flex-start;
     align-items: center;
     border-radius: 5px;
     background-color: transparent;
@@ -30,9 +30,8 @@
         background-color: rgba(42, 89, 199, 0.4);
       }
     }
-
-    
   }
+  
   &__icon{
     width: 20px;
     height: 100%;
@@ -45,7 +44,5 @@
   &__title {
     font-size: calc(6px + 1.4vmin);
     line-height: 100%;
-
-    
   }
 }

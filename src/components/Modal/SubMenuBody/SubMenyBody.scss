@@ -2,8 +2,8 @@
   margin: 0px 10px;
   display: flex;
   flex-direction: column;
-  justify-content: start;
-  align-items: start;
+  justify-content: flex-start;
+  align-items: flex-start;
   box-sizing: border-box;
 
   &__item {
@@ -12,8 +12,8 @@
     padding: 8px 10px;
     display: flex;
     flex-direction: column;
-    justify-content: start;
-    align-items: start;
+    justify-content: flex-start;
+    align-items: flex-start;
     border-radius: 5px;
     background-color: #4d5464;
     box-sizing: border-box;
